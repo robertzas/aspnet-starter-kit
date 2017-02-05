@@ -15,11 +15,11 @@ namespace Server.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly SignInManager<User> _signInManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger _logger;
         private readonly SortedList<string, string> _providers;
 
-        public AccountController(SignInManager<User> signInManager, ILoggerFactory loggerFactory)
+        public AccountController(SignInManager<ApplicationUser> signInManager, ILoggerFactory loggerFactory)
         {
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();

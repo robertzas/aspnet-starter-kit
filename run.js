@@ -72,7 +72,7 @@ tasks.set('appsettings', () => new Promise(resolve => {
     const filename = path.resolve(__dirname, `./server/appsettings.${env}.json`);
     try {
       fs.writeFileSync(filename, JSON.stringify(source, null, '  '), { flag: 'wx' });
-    } catch (err) {} // eslint-disable-line no-empty
+    } catch (err) { } // eslint-disable-line no-empty
     if (--count === 0) resolve();
   });
 }));
@@ -109,7 +109,7 @@ tasks.set('build', () => {
 tasks.set('publish', () => {
   global.DEBUG = process.argv.includes('--debug') || false;
   const remote = {
-    name: 'azure',
+    name: 'heroku',
     url: 'https://<user>@<app>.scm.azurewebsites.net:443/<app>.git', // TODO: Update deployment URL
   };
   const opts = { cwd: path.resolve(__dirname, './build'), stdio: ['ignore', 'inherit', 'inherit'] };
@@ -125,19 +125,19 @@ tasks.set('publish', () => {
 
   return Promise.resolve()
     .then(() => run('clean'))
-    .then(() => git('init', '--quiet'))
-    .then(() => git('config', '--get', `remote.${remote.name}.url`)
-      .then(() => git('remote', 'set-url', remote.name, remote.url))
-      .catch(() => git('remote', 'add', remote.name, remote.url))
-    )
-    .then(() => git('ls-remote', '--exit-code', remote.url, 'master')
-      .then(() => Promise.resolve()
-        .then(() => git('fetch', remote.name))
-        .then(() => git('reset', `${remote.name}/master`, '--hard'))
-        .then(() => git('clean', '--force'))
-      )
-      .catch(() => Promise.resolve())
-    )
+    // .then(() => git('init', '--quiet'))
+    // .then(() => git('config', '--get', `remote.${remote.name}.url`)
+    //   .then(() => git('remote', 'set-url', remote.name, remote.url))
+    //   .catch(() => git('remote', 'add', remote.name, remote.url))
+    // )
+    // .then(() => git('ls-remote', '--exit-code', remote.url, 'master')
+    //   .then(() => Promise.resolve()
+    //     .then(() => git('fetch', remote.name))
+    //     .then(() => git('reset', `${remote.name}/master`, '--hard'))
+    //     .then(() => git('clean', '--force'))
+    //   )
+    //   .catch(() => Promise.resolve())
+    // )
     .then(() => run('build'))
     .then(() => git('add', '.', '--all'))
     .then(() => git('commit', '--message', new Date().toUTCString())

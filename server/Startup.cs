@@ -17,6 +17,7 @@ namespace Server
 {
     public class Startup
     {
+        IHostingEnvironment _env;
         // Load application settings from JSON file(s)
         // https://docs.asp.net/en/latest/fundamentals/configuration.html
         public Startup(IHostingEnvironment env)
@@ -26,6 +27,7 @@ namespace Server
                 .AddJsonFile($"appsettings.json", optional: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .Build();
+            _env = env;
         }
 
         public IConfiguration Configuration { get; set; }
@@ -35,17 +37,24 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             // https://docs.asp.net/en/latest/security/anti-request-forgery.html
-            services.AddAntiforgery(options => options.CookieName =  options.HeaderName = "X-XSRF-TOKEN");
+            services.AddAntiforgery(options => options.CookieName = options.HeaderName = "X-XSRF-TOKEN");
 
             // Register Entity Framework database context
             // https://docs.efproject.net/en/latest/platforms/aspnetcore/new-db.html
-            services.AddDbContext<DatabaseContext>(options =>
+            services.AddDbContext<ApplicationDBContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                if (_env.EnvironmentName == "Production")
+                {
+                    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                }
+                else if (_env.EnvironmentName == "Development")
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                }
             });
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DatabaseContext>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDBContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvcCore()
@@ -53,6 +62,8 @@ namespace Server
                 .AddViews()
                 .AddRazorViewEngine()
                 .AddJsonFormatters();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory factory)
@@ -84,6 +95,7 @@ namespace Server
 
             // Configure ASP.NET MVC
             // https://docs.asp.net/en/latest/mvc/index.html
+            app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{*url}", new { controller = "Home", action = "Index" });
