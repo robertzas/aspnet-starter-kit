@@ -23,3 +23,6 @@ project.lock.json
 
 # Sensitive data
 appsettings.*.json
+
+# Visual Studio
+/.vs

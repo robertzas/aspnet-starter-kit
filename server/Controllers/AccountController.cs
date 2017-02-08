@@ -2,13 +2,12 @@
 // This source code is licensed under the MIT license found in the
 // LICENSE.txt file in the root directory of this source tree.
 
-using System.Collections.Generic;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Server.Models;
+using System.Collections.Generic;
 
 namespace Server.Controllers
 {

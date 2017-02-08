@@ -8,5 +8,7 @@ namespace Server.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public string FamilyName { get; set; }
+        public string GivenName { get; set; }
     }
 }

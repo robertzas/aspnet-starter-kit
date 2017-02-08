@@ -7,14 +7,14 @@ using Server.Models;
 
 namespace server.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
@@ -123,75 +123,6 @@ namespace server.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OpenIddict.OpenIddictApplication", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClientId");
-
-                    b.Property<string>("ClientSecret");
-
-                    b.Property<string>("DisplayName");
-
-                    b.Property<string>("LogoutRedirectUri");
-
-                    b.Property<string>("RedirectUri");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId")
-                        .IsUnique();
-
-                    b.ToTable("OpenIddictApplications");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictAuthorization", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Scope");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OpenIddictAuthorizations");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictScope", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OpenIddictScopes");
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictToken", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ApplicationId");
-
-                    b.Property<string>("AuthorizationId");
-
-                    b.Property<string>("Type");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("AuthorizationId");
-
-                    b.ToTable("OpenIddictTokens");
-                });
-
             modelBuilder.Entity("Server.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -206,6 +137,10 @@ namespace server.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FamilyName");
+
+                    b.Property<string>("GivenName");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -277,17 +212,6 @@ namespace server.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("OpenIddict.OpenIddictToken", b =>
-                {
-                    b.HasOne("OpenIddict.OpenIddictApplication")
-                        .WithMany("Tokens")
-                        .HasForeignKey("ApplicationId");
-
-                    b.HasOne("OpenIddict.OpenIddictAuthorization")
-                        .WithMany("Tokens")
-                        .HasForeignKey("AuthorizationId");
                 });
         }
     }

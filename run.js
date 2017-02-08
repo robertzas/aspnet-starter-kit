@@ -31,7 +31,7 @@ function run(task) {
 // Clean up the output directory
 // -----------------------------------------------------------------------------
 tasks.set('clean', () => Promise.resolve()
-  .then(() => del(['build/*', 'public/dist/*', '!build/.git'], { dot: true }))
+  .then(() => del(['build/*', 'public/dist/*', '!build/.git', 'server/bin', 'server/obj'], { dot: true }))
   .then(() => {
     mkdirp.sync('build/public/dist');
     mkdirp.sync('public/dist');
@@ -179,6 +179,8 @@ tasks.set('start', () => {
               // Launch Browsersync after the initial bundling is complete
               // For more information visit https://browsersync.io/docs/options
               require('browser-sync').create().init({
+                cors: true,
+                open: false,
                 proxy: {
                   target: 'localhost:5000',
                   middleware: [

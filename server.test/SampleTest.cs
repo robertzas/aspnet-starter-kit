@@ -4,7 +4,7 @@
 
 using Xunit;
 
-namespace server.test
+namespace Server.Test
 {
     // see example explanation on xUnit.net website:
     // https://xunit.github.io/docs/getting-started-dotnet-core.html
@@ -22,7 +22,7 @@ namespace server.test
             Assert.Equal(5, Add(2, 2));
         }
 
-        int Add(int x, int y)
+        private int Add(int x, int y)
         {
             return x + y;
         }

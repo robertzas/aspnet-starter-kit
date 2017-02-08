@@ -38,8 +38,8 @@
     "cpy": "^5.0.0",
     "css-loader": "^0.26.1",
     "del": "^2.2.2",
-    "eslint": "^3.14.1",
-    "eslint-config-airbnb": "^14.0.0",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
@@ -52,8 +52,8 @@
     "mocha": "^3.2.0",
     "path-to-regexp": "^1.7.0",
     "pixrem": "^3.0.2",
-    "pleeease-filters": "^3.0.0",
-    "postcss": "^5.2.11",
+    "pleeease-filters": "^3.0.1",
+    "postcss": "^5.2.12",
     "postcss-calc": "^5.3.1",
     "postcss-color-function": "^3.0.0",
     "postcss-custom-media": "^5.0.1",
@@ -81,8 +81,7 @@
     ],
     "plugins": [
       "transform-class-properties",
-      "transform-object-rest-spread",
-      [
+      "transform-object-rest-spread", [
         "transform-regenerator",
         {
           "async": false
@@ -112,7 +111,8 @@
   "stylelint": {
     "extends": "stylelint-config-standard",
     "rules": {
-      "string-quotes": "single"
+      "string-quotes": "single",
+      "no-plusplus": "off"
     }
   },
   "scripts": {
