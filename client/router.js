@@ -1,15 +1,6 @@
-/**
- * ASP.NET Core Starter Kit (https://dotnetreact.com)
- *
- * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 import React from 'react';
 
-function decodeParam(val) {
+const decodeParam = (val) => {
   if (!(typeof val === 'string' || val.length === 0)) {
     return val;
   }
@@ -24,12 +15,12 @@ function decodeParam(val) {
 
     throw err;
   }
-}
+};
 
 // Match the provided URL path pattern to an actual URI string. For example:
 //   matchURI({ path: '/posts/:id' }, '/dummy') => null
 //   matchURI({ path: '/posts/:id' }, '/posts/123') => { id: 123 }
-function matchURI(route, path) {
+const matchURI = (route, path) => {
   const match = route.pattern.exec(path);
 
   if (!match) {
@@ -38,17 +29,17 @@ function matchURI(route, path) {
 
   const params = Object.create(null);
 
-  for (let i = 1; i < match.length; i++) {
+  for (let i = 1; i < match.length; i += 1) {
     params[route.keys[i - 1].name] = match[i] !== undefined ? decodeParam(match[i]) : undefined;
   }
 
   return params;
-}
+};
 
 // Find the route matching the specified location (context), fetch the required data,
 // instantiate and return a React component
 function resolve(routes, context) {
-  for (const route of routes) {
+  routes.forEach((route) => {
     const params = matchURI(route, context.error ? '/error' : context.pathname);
 
     if (params) {
@@ -59,7 +50,7 @@ function resolve(routes, context) {
         const keys = Object.keys(route.data);
         return Promise.all([
           route.load(),
-          ...keys.map(key => {
+          ...keys.map((key) => {
             const query = route.data[key];
             const method = query.substring(0, query.indexOf(' ')); // GET
             const url = query.substr(query.indexOf(' ') + 1);      // /api/tasks/$id
@@ -74,7 +65,7 @@ function resolve(routes, context) {
 
       return route.load().then(Page => <Page route={{ ...route, params }} error={context.error} />);
     }
-  }
+  });
 
   const error = new Error('Page not found');
   error.status = 404;

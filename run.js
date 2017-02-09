@@ -180,7 +180,6 @@ tasks.set('start', () => {
               // For more information visit https://browsersync.io/docs/options
               require('browser-sync').create().init({
                 cors: true,
-                open: false,
                 proxy: {
                   target: 'localhost:5000',
                   middleware: [

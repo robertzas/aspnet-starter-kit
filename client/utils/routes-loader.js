@@ -37,7 +37,7 @@ module.exports = function routesLoader(source) {
   const output = ['[\n'];
   const routes = JSON.parse(source);
 
-  for (const route of routes) {
+  routes.forEach((route) => {
     const keys = [];
     const pattern = toRegExp(route.path, keys);
     const require = route.chunk && route.chunk === 'main' ?
@@ -54,7 +54,7 @@ module.exports = function routesLoader(source) {
     output.push(`    load() {\n      return ${require(route.view)};\n    },\n`);
 
     output.push('  },\n');
-  }
+  });
 
   output.push(']');
 

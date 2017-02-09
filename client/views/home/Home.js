@@ -19,6 +19,10 @@ class Home extends React.Component {
     articles: PropTypes.array.isRequired,
   };
 
+  static defaultProps = {
+    articles: [],
+  }
+
   componentDidMount() {
     document.title = title;
   }
