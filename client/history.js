@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ASP.NET Core Starter Kit (https://dotnetreact.com)
  *
  * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-import useQueries from 'history/lib/useQueries';
+import createBrowserHistory from 'history/createBrowserHistory'
+//import useQueries from 'history/lib/useQueries';
 
-export default useQueries(createBrowserHistory)();
+export default createBrowserHistory()

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ASP.NET Core Starter Kit (https://dotnetreact.com)
  *
  * Copyright © 2014-present Kriasoft, LLC. All rights reserved.
@@ -167,7 +167,7 @@ tasks.set('start', () => {
         // Launch ASP.NET Core server after the initial bundling is complete
         if (++count === 1) {
           const options = {
-            cwd: path.resolve(__dirname, './server/'),
+            cwd: path.resolve(__dirname, 'server'),
             stdio: ['ignore', 'pipe', 'inherit'],
             env: Object.assign({}, process.env, {
               ASPNETCORE_ENVIRONMENT: 'Development',
